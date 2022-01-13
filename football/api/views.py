@@ -3,6 +3,10 @@ from requests.sessions import session
 from .models import Countries, Stadiums, Seasons, Teams, Leagues, Players
 import requests
 from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework import status, filters
+from rest_framework.response import Response
+from .serializers import LeaguesSerializer
 # Create your views here.
 
 headers = {
@@ -75,7 +79,7 @@ def stadiums_insert():
                 
 def teams_insert():
 
-    for i in range(80000):
+    for i in range(10505,80000):
         url = "https://api-football-v1.p.rapidapi.com/v3/teams"
         querystring = {
                 "id":i
@@ -113,7 +117,7 @@ def teams_insert():
 
 def player_insert():
     
-    for i in range(80000):
+    for i in range(10505,80000):
         url = "https://api-football-v1.p.rapidapi.com/v3/players"
         querystring = {
                 "id":i,
@@ -159,6 +163,8 @@ def index(request):
     player_insert()
     return HttpResponse("hello")
 
-
-def hello(request):
-    return HttpResponse("hello, world")
+@api_view(['GET'])
+def top_ten_leagues(request):
+    ten_leagues = Leagues.objects.order_by('rank')[:10]
+    serializer = LeaguesSerializer(ten_leagues, many=True)
+    return Response(serializer.data)
