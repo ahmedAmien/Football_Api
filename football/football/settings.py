@@ -25,9 +25,14 @@ SECRET_KEY = 'django-insecure-bod(u-m-cayqgru=w-jel^d(vpibpqq!3!+f@aok1nr4yr_cn)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
+
+ALLOWED_HOSTS = [ '70ac-85-104-82-7.ngrok.io', '127.0.0.1']
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,9 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
+    
+    'rest_framework',
     
     'api',
-    'rest_framework',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -50,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'football.urls'
